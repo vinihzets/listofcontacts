@@ -10,20 +10,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // ContactHelper helper = ContactHelper();
+  ContactHelper helper = ContactHelper();
 
-  // @override
-  // void initState() {
-  //   super.initState();
+  @override
+  void initState() {
+    super.initState();
 
-  //   Contact c = Contact();
-  //   c.name = "Vinicius Almeida";
-  //   c.email = "viniciusdaarky@outlook.com";
-  //   c.phone = "62984208666";
-  //   c.img = "teste";
+    // Contact c = Contact();
+    // c.name = "Vinicius Almeida";
+    // c.email = "viniciusdaarky@outlook.com";
+    // c.phone = "62984208666";
+    // c.img = "teste";
 
-  //   helper.saveContact(c);
-  // }
+    // helper.saveContact(c);
+
+    helper.getAllContacts().then((list) {
+      print(list);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
