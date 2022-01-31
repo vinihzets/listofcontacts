@@ -44,7 +44,9 @@ class _HomePageState extends State<HomePage> {
       body: ListView.builder(
         padding: EdgeInsets.all(20.0),
         itemCount: contacts.length,
-        itemBuilder: (context, index) {},
+        itemBuilder: (context, index) {
+          return _contactCard(context, index);
+        },
       ),
     );
   }
@@ -66,6 +68,26 @@ class _HomePageState extends State<HomePage> {
                         ? FileImage(File(contacts[index].img))
                         : NetworkImage(
                             'https://i.dlpng.com/static/png/6950136_preview.png'))),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  contacts[index].name ?? "",
+                  style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  contacts[index].email ?? "",
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                Text(
+                  contacts[index].phone ?? "",
+                  style: TextStyle(fontSize: 18.0),
+                )
+              ],
+            ),
           )
         ],
       ),
