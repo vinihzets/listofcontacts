@@ -12,20 +12,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   ContactHelper helper = ContactHelper();
 
+  List<Contact> contacts = <Contact>[];
+
+
   @override
-  void initState() {
+  void initState(){
     super.initState();
 
-    // Contact c = Contact();
-    // c.name = "Vinicius Almeida";
-    // c.email = "viniciusdaarky@outlook.com";
-    // c.phone = "62984208666";
-    // c.img = "teste";
-
-    // helper.saveContact(c);
-
-    helper.getAllContacts().then((list) {
-      print(list);
+    helper.getAllContacts().then((list){
+contacts = list;
     });
   }
 
@@ -38,11 +33,19 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         actions: [IconButton(icon: Icon(Icons.settings), onPressed: () {})],
       ),
-      floatingActionButton: const FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
         backgroundColor: Colors.red,
-        child: const Icon(
+        child: Icon(
           Icons.add,
         ),
+      ),
+      body: ListView.builder(
+        padding: EdgeInsets.all(20.0),
+        itemCount:
+        itemBuilder: (context, index){
+
+        },
       ),
     );
   }
