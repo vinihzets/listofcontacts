@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:agendadetarefas/helpers/contact_helper.dart';
 import 'package:agendadetarefas/pages/contact_addpage.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +16,12 @@ class _HomePageState extends State<HomePage> {
 
   List<Contact> contacts = <Contact>[];
 
-
   @override
-  void initState(){
+  void initState() {
     super.initState();
 
-    helper.getAllContacts().then((list){
-contacts = list;
+    helper.getAllContacts().then((list) {
+      contacts = list;
     });
   }
 
@@ -42,11 +43,32 @@ contacts = list;
       ),
       body: ListView.builder(
         padding: EdgeInsets.all(20.0),
-        itemCount:
-        itemBuilder: (context, index){
-
-        },
+        itemCount: contacts.length,
+        itemBuilder: (context, index) {},
       ),
     );
+  }
+
+  Widget _contactCard(BuildContext context, int index) {
+    return GestureDetector(
+        child: Card(
+            child: Padding(
+      padding: EdgeInsets.all(10.0),
+      child: Row(
+        children: <Widget>[
+          Container(
+            width: 80.0,
+            height: 80.0,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                    image: contacts[index].img != null
+                        ? FileImage(File(contacts[index].img))
+                        : NetworkImage(
+                            'https://i.dlpng.com/static/png/6950136_preview.png'))),
+          )
+        ],
+      ),
+    )));
   }
 }
