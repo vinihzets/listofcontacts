@@ -1,13 +1,29 @@
+import 'package:agendadetarefas/helpers/contact_helper.dart';
 import 'package:flutter/material.dart';
 
 class NewContact extends StatefulWidget {
-  const NewContact({Key key}) : super(key: key);
+  final Contact contact;
+
+  NewContact({this.contact});
 
   @override
   _NewContactState createState() => _NewContactState();
 }
 
 class _NewContactState extends State<NewContact> {
+  Contact _editedContact;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.contact == null) {
+      _editedContact = Contact();
+    } else {
+      _editedContact = Contact.fromMap(widget.contact.toMap());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
