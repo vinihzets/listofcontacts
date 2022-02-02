@@ -4,6 +4,7 @@ import 'package:agendadetarefas/pages/home_page.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: HomePage(),
+    home: NewContact(),
+    debugShowCheckedModeBanner: false,
   ));
 }
