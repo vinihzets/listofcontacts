@@ -16,6 +16,9 @@ class _NewContactState extends State<NewContact> {
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
+
+  final _nameFocus = FocusNode();
+
   bool _userEdited = false;
 
   Contact _editedContact;
@@ -60,6 +63,7 @@ class _NewContactState extends State<NewContact> {
                 ),
                 TextField(
                   decoration: InputDecoration(labelText: 'Nome'),
+                  focusNode: _nameFocus,
                   onChanged: (text) {
                     _userEdited = true;
                     setState(() {
@@ -91,7 +95,14 @@ class _NewContactState extends State<NewContact> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              if (_editedContact.name != null &&
+                  _editedContact.name.isNotEmpty) {
+                Navigator.pop(context, _editedContact);
+              } else {
+                FocusScope.of(context).requestFocus(_nameFocus);
+              }
+            },
             child: Icon(Icons.save),
             backgroundColor: Colors.red));
   }
