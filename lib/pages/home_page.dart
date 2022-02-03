@@ -191,6 +191,7 @@ class _HomePageState extends State<HomePage> {
         _getAllContacts();
       } else {
         await helper.saveContact(recContact);
+        contacts.add(recContact);
       }
       setState(() {});
     }
