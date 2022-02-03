@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:agendadetarefas/helpers/contact_helper.dart';
 import 'package:agendadetarefas/pages/contact_addpage.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -95,9 +96,72 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       onTap: () {
-        _showContactPage(contact: contacts[index]);
+        _showOptions(context, index);
       },
     );
+  }
+
+  void _showOptions(BuildContext context, int index) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return BottomSheet(
+              onClosing: () {},
+              builder: (context) {
+                return Container(
+                  padding: EdgeInsets.all(10.0),
+                  child:
+                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            launch('tel:${contacts[index].phone}');
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'Ligar',
+                            style: TextStyle(fontSize: 22.0),
+                          ),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.red))),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            _showContactPage(contact: contacts[index]);
+                          },
+                          child:
+                              Text('Editar', style: TextStyle(fontSize: 22.0)),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.red))),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            helper.deleteContact(contacts[index].id);
+                            setState(() {
+                              contacts.removeAt(index);
+                              Navigator.pop(context);
+                            });
+                          },
+                          child: Text(
+                            'Excluir',
+                            style: TextStyle(fontSize: 22.0),
+                          ),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.red))),
+                    )
+                  ]),
+                );
+              });
+        });
   }
 
   void _showContactPage({Contact contact}) async {
