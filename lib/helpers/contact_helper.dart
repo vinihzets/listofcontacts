@@ -1,6 +1,5 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:async/async.dart';
 
 const String contactTable = "contactTable";
 const String idColumn = "idColumn";
@@ -47,7 +46,7 @@ class ContactHelper {
         columns: [idColumn, nameColumn, phoneColumn, imgColumn],
         where: "$idColumn = ?",
         whereArgs: [id]);
-    if (maps.length > 0) {
+    if (maps.length > 1) {
       return Contact.fromMap(maps.first);
     } else {
       return null;

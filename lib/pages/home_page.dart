@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contatos'),
+        title: const Text('Contatos'),
         backgroundColor: Colors.red,
         centerTitle: true,
         actions: [
@@ -52,12 +52,12 @@ class _HomePageState extends State<HomePage> {
           _showContactPage();
         },
         backgroundColor: Colors.red,
-        child: Icon(
+        child: const Icon(
           Icons.add,
         ),
       ),
       body: ListView.builder(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         itemCount: contacts.length,
         itemBuilder: (context, index) {
           return _contactCard(context, index);
@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
     return GestureDetector(
       child: Card(
         child: Padding(
-          padding: EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
           child: Row(
             children: <Widget>[
               Container(
@@ -81,26 +81,26 @@ class _HomePageState extends State<HomePage> {
                     image: DecorationImage(
                         image: contacts[index].img != null
                             ? FileImage(File(contacts[index].img))
-                            : NetworkImage(
+                            : const NetworkImage(
                                 'https://i.dlpng.com/static/png/6950136_preview.png'))),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 10.0),
+                padding: const EdgeInsets.only(left: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       contacts[index].name ?? "",
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 22.0, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       contacts[index].email ?? "",
-                      style: TextStyle(fontSize: 18.0),
+                      style: const TextStyle(fontSize: 18.0),
                     ),
                     Text(
                       contacts[index].phone ?? "",
-                      style: TextStyle(fontSize: 18.0),
+                      style: const TextStyle(fontSize: 18.0),
                     )
                   ],
                 ),
@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
               onClosing: () {},
               builder: (context) {
                 return Container(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child:
                       Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                     Padding(
@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                             launch('tel:${contacts[index].phone}');
                             Navigator.pop(context);
                           },
-                          child: Text(
+                          child: const Text(
                             'Ligar',
                             style: TextStyle(fontSize: 22.0),
                           ),
@@ -148,8 +148,8 @@ class _HomePageState extends State<HomePage> {
                             Navigator.pop(context);
                             _showContactPage(contact: contacts[index]);
                           },
-                          child:
-                              Text('Editar', style: TextStyle(fontSize: 22.0)),
+                          child: const Text('Editar',
+                              style: TextStyle(fontSize: 22.0)),
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Colors.red))),
@@ -164,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                               Navigator.pop(context);
                             });
                           },
-                          child: Text(
+                          child: const Text(
                             'Excluir',
                             style: TextStyle(fontSize: 22.0),
                           ),
@@ -188,15 +188,17 @@ class _HomePageState extends State<HomePage> {
     if (recContact != null) {
       if (contact != null) {
         await helper.updateContact(recContact);
-        await _getAllContacts();
+        _getAllContacts();
       } else {
         await helper.saveContact(recContact);
       }
+      setState(() {});
     }
   }
 
   void _getAllContacts() {
     helper.getAllContacts().then((list) {
+      setState(() {});
       contacts = list;
     });
   }
@@ -205,12 +207,12 @@ class _HomePageState extends State<HomePage> {
     switch (result) {
       case OrderOptions.orderaz:
         contacts.sort((a, b) {
-          a.name.toLowerCase().compareTo(b.name.toLowerCase());
+          return a.name.toLowerCase().compareTo(b.name.toLowerCase());
         });
         break;
       case OrderOptions.orderza:
         contacts.sort((b, a) {
-          b.name.toLowerCase().compareTo(a.name.toLowerCase());
+          return b.name.toLowerCase().compareTo(a.name.toLowerCase());
         });
         break;
     }

@@ -8,7 +8,7 @@ enum OrderOptions { orderaz, orderza }
 class NewContact extends StatefulWidget {
   final Contact contact;
 
-  NewContact({this.contact});
+  const NewContact({this.contact});
 
   @override
   _NewContactState createState() => _NewContactState();
@@ -46,19 +46,6 @@ class _NewContactState extends State<NewContact> {
         onWillPop: _requestPop,
         child: Scaffold(
             appBar: AppBar(
-              actions: <Widget>[
-                PopupMenuButton<OrderOptions>(
-                    itemBuilder: (context) => <PopupMenuEntry<OrderOptions>>[
-                          const PopupMenuItem<OrderOptions>(
-                            child: Text('Ordernar de A a Z'),
-                            value: OrderOptions.orderaz,
-                          ),
-                          const PopupMenuItem<OrderOptions>(
-                            child: Text('Ordenar de Z a A'),
-                            value: OrderOptions.orderza,
-                          )
-                        ])
-              ],
               title: Text(_editedContact.name ?? "Novo Contato!"),
               centerTitle: true,
               backgroundColor: Colors.red,
@@ -76,12 +63,12 @@ class _NewContactState extends State<NewContact> {
                             image: DecorationImage(
                                 image: _editedContact.img != null
                                     ? FileImage(File(_editedContact.img))
-                                    : NetworkImage(
+                                    : const NetworkImage(
                                         'https://i.dlpng.com/static/png/6950136_preview.png'))),
                       ),
                     ),
                     TextField(
-                      decoration: InputDecoration(labelText: 'Nome'),
+                      decoration: const InputDecoration(labelText: 'Nome'),
                       focusNode: _nameFocus,
                       onChanged: (text) {
                         _userEdited = true;
@@ -92,7 +79,7 @@ class _NewContactState extends State<NewContact> {
                       controller: _nameController,
                     ),
                     TextField(
-                      decoration: InputDecoration(labelText: 'E-mail'),
+                      decoration: const InputDecoration(labelText: 'E-mail'),
                       onChanged: (text) {
                         _userEdited = true;
                         _editedContact.email = text;
@@ -101,7 +88,7 @@ class _NewContactState extends State<NewContact> {
                       controller: _emailController,
                     ),
                     TextField(
-                      decoration: InputDecoration(labelText: 'phone'),
+                      decoration: const InputDecoration(labelText: 'phone'),
                       onChanged: (text) {
                         _userEdited = true;
                         _editedContact.phone = text;
@@ -122,7 +109,7 @@ class _NewContactState extends State<NewContact> {
                     FocusScope.of(context).requestFocus(_nameFocus);
                   }
                 },
-                child: Icon(Icons.save),
+                child: const Icon(Icons.save),
                 backgroundColor: Colors.red)));
   }
 
@@ -132,21 +119,21 @@ class _NewContactState extends State<NewContact> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('Descartar Alterações'),
-              content: Text('Se sair as alterações serao perdidas!'),
+              title: const Text('Descartar Alterações'),
+              content: const Text('Se sair as alterações serao perdidas!'),
               actions: <Widget>[
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('Cancelar!'),
+                  child: const Text('Cancelar!'),
                 ),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
                       Navigator.pop(context);
                     },
-                    child: Text('Sim!'))
+                    child: const Text('Sim!'))
               ],
             );
           });
