@@ -31,7 +31,21 @@ class _HomePageState extends State<HomePage> {
         title: Text('Contatos'),
         backgroundColor: Colors.red,
         centerTitle: true,
-        actions: [IconButton(icon: Icon(Icons.settings), onPressed: () {})],
+        actions: [
+          PopupMenuButton<OrderOptions>(
+            itemBuilder: (context) => <PopupMenuEntry<OrderOptions>>[
+              const PopupMenuItem<OrderOptions>(
+                child: Text('Ordernar de A a Z'),
+                value: OrderOptions.orderaz,
+              ),
+              const PopupMenuItem<OrderOptions>(
+                child: Text('Ordenar de Z a A'),
+                value: OrderOptions.orderza,
+              )
+            ],
+            onSelected: _orderList,
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -185,5 +199,21 @@ class _HomePageState extends State<HomePage> {
     helper.getAllContacts().then((list) {
       contacts = list;
     });
+  }
+
+  void _orderList(OrderOptions result) {
+    switch (result) {
+      case OrderOptions.orderaz:
+        contacts.sort((a, b) {
+          a.name.toLowerCase().compareTo(b.name.toLowerCase());
+        });
+        break;
+      case OrderOptions.orderza:
+        contacts.sort((b, a) {
+          b.name.toLowerCase().compareTo(a.name.toLowerCase());
+        });
+        break;
+    }
+    setState(() {});
   }
 }

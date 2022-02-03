@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:agendadetarefas/helpers/contact_helper.dart';
 import 'package:flutter/material.dart';
 
+enum OrderOptions { orderaz, orderza }
+
 class NewContact extends StatefulWidget {
   final Contact contact;
 
@@ -44,6 +46,19 @@ class _NewContactState extends State<NewContact> {
         onWillPop: _requestPop,
         child: Scaffold(
             appBar: AppBar(
+              actions: <Widget>[
+                PopupMenuButton<OrderOptions>(
+                    itemBuilder: (context) => <PopupMenuEntry<OrderOptions>>[
+                          const PopupMenuItem<OrderOptions>(
+                            child: Text('Ordernar de A a Z'),
+                            value: OrderOptions.orderaz,
+                          ),
+                          const PopupMenuItem<OrderOptions>(
+                            child: Text('Ordenar de Z a A'),
+                            value: OrderOptions.orderza,
+                          )
+                        ])
+              ],
               title: Text(_editedContact.name ?? "Novo Contato!"),
               centerTitle: true,
               backgroundColor: Colors.red,
@@ -52,16 +67,18 @@ class _NewContactState extends State<NewContact> {
               child: Center(
                 child: Column(
                   children: [
-                    Container(
-                      width: 150.0,
-                      height: 150.0,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: _editedContact.img != null
-                                  ? FileImage(File(_editedContact.img))
-                                  : NetworkImage(
-                                      'https://i.dlpng.com/static/png/6950136_preview.png'))),
+                    GestureDetector(
+                      child: Container(
+                        width: 150.0,
+                        height: 150.0,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: _editedContact.img != null
+                                    ? FileImage(File(_editedContact.img))
+                                    : NetworkImage(
+                                        'https://i.dlpng.com/static/png/6950136_preview.png'))),
+                      ),
                     ),
                     TextField(
                       decoration: InputDecoration(labelText: 'Nome'),
